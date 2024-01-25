@@ -9,6 +9,8 @@ env:
   AZURE_RG_NAME: catsRG
   ACR_NAME: catsk8s
   CONTAINER_IMAGE_NAME: nextapp
+  AKS_CLUSTER_NAME: catsk8s
+  AZURE_RG_NAME: catsRG
 
 jobs:
   build-and-deploy:
@@ -31,9 +33,21 @@ jobs:
           push: true
           tags: ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME}}:latest
 
-#      - name: Deploy to AKS
-#        uses: azure/aks-set-image@v1
-#        with:
-#          resource-group: <your-resource-group-name>
-#          cluster-name: <your-aks-cluster-name>
-#          container-image-name: <your-acr-name>.azurecr.io/<your-image-name>:latest
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set AKS Context
+        uses: azure/aks-set-context@v3
+        with:
+           creds: ${{ secrets.AZURE_CREDENTIALS }}
+           cluster-name: ${{ env.AKS_CLUSTER_NAME }}
+           resource-group: ${{ env.AZURE_RG_NAME }}
+
+      - name: Deploy to AKS
+        uses: azure/aks-set-image@v1
+        with:
+          resource-group: ${{ env.AZURE_RG_NAME }}
+          cluster-name: ${{ env.AKS_CLUSTER_NAME }}
+          container-image-name: ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME}}:latest
