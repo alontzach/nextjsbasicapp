@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 
 image:
-  name: gcr.io/mona-220512/config_validation_server
-  tag: v1
+  name: nextapp
+  tag: latest
 
 replicas: 2
 container_port: 8080

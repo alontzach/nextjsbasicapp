@@ -60,6 +60,9 @@ jobs:
           renderEngine: "helm"
           helmChart: ${{ env.CHART_PATH }}
           overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}/${{ env.ENVIRONMENT }}.yml
+          overrides: |
+            image.name: ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME }}
+            image.tag: latest
           helm-version: "latest"
         id: bake
 
@@ -69,8 +72,6 @@ jobs:
         with:
           action: deploy
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
-          images: |
-            ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME }}:latest
 
 #
 #      - name: Deploy to AKS
