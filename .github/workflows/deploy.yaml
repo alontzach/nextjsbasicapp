@@ -1,4 +1,4 @@
-name: Dockerize and Deploy Next.js App
+name: Deploy NextApp to AKS
 
 on:
   push:
@@ -10,8 +10,8 @@ env:
   ACR_NAME: catsk8s
   CONTAINER_IMAGE_NAME: nextapp
   AKS_CLUSTER_NAME: catsk8s
-  CHART_PATH: "/chart"
-  CHART_OVERRIDE_PATH: "/environments"
+  CHART_PATH: "./chart/"
+  CHART_OVERRIDE_PATH: "./environments"
   ENVIRONMENT: "prod"
 
 jobs:
