@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nextapp
+spec:
+  selector:
+    name: nextapp
+  ports:
+    - protocol: TCP
+      targetPort: {{ .Values.container_port }}
+      port: {{ .Values.service_port }}
+  type: LoadBalancer

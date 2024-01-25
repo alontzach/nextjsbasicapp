@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextapp
+spec:
+  minReadySeconds: 5
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: nextapp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: nextapp
+    spec:
+      containers:
+      - name: nextapp
+        imagePullPolicy: Always
+        image: '{{ .Values.image.name }}:{{ .Values.image.tag }}'
+        ports:
+          - containerPort: {{ .Values.container_port }}
+            name: tcp
+        resources:
+          requests:
+            cpu: '50m'
+            memory: '64M'
+          limits:
+            cpu: {{ .Values.cpu_limits }}
+            memory: {{ .Values.memory_limits }}
+        livenessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /
+            port: {{ .Values.container_port }}
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 2
+        readinessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          successThreshold: 1
+          httpGet:
+            path: /
+            port: {{ .Values.container_port }}
+            scheme: HTTP
