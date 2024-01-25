@@ -31,22 +31,22 @@ spec:
           limits:
             cpu: {{ .Values.cpu_limits }}
             memory: {{ .Values.memory_limits }}
-        livenessProbe:
-          failureThreshold: 5
-          httpGet:
-            path: /
-            port: {{ .Values.container_port }}
-            scheme: HTTP
-          initialDelaySeconds: 10
-          periodSeconds: 60
-          successThreshold: 1
-          timeoutSeconds: 2
-        readinessProbe:
-          failureThreshold: 3
-          initialDelaySeconds: 10
-          periodSeconds: 60
-          successThreshold: 1
-          httpGet:
-            path: /
-            port: {{ .Values.container_port }}
-            scheme: HTTP
+#        livenessProbe:
+#          failureThreshold: 5
+#          httpGet:
+#            path: /
+#            port: {{ .Values.container_port }}
+#            scheme: HTTP
+#          initialDelaySeconds: 10
+#          periodSeconds: 60
+#          successThreshold: 1
+#          timeoutSeconds: 2
+#        readinessProbe:
+#          failureThreshold: 3
+#          initialDelaySeconds: 10
+#          periodSeconds: 60
+#          successThreshold: 1
+#          httpGet:
+#            path: /
+#            port: {{ .Values.container_port }}
+#            scheme: HTTP
