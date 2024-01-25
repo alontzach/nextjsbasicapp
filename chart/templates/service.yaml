@@ -10,4 +10,4 @@ spec:
     - protocol: TCP
       targetPort: {{ .Values.container_port }}
       port: {{ .Values.service_port }}
-  type: LoadBalancer
+  type: ClusterIP
