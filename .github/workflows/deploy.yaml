@@ -10,7 +10,6 @@ env:
   ACR_NAME: catsk8s
   CONTAINER_IMAGE_NAME: nextapp
   AKS_CLUSTER_NAME: catsk8s
-  AZURE_RG_NAME: catsRG
 
 jobs:
   build-and-deploy:
