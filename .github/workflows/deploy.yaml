@@ -59,7 +59,7 @@ jobs:
         with:
           renderEngine: "helm"
           helmChart: ${{ env.CHART_PATH }}
-          overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}/${{ env.ENVIRONMENT }}
+          overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}/${{ env.ENVIRONMENT }}.yml
           helm-version: "latest"
         id: bake
 
