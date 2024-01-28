@@ -31,10 +31,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Dependency scanning
-        uses: owasp/dependency-check-action@v3.0.1
+        uses: dependency-check/Dependency-Check_Action@1.1.0
         with:
           format: 'HTML'
-          outputDirectory: 'reports'
+          path: '.'
+          out: 'reports'
 
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
