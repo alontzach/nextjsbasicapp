@@ -21,19 +21,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Login to Azure Container Registry
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ env.ACR_NAME }}.azurecr.io
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME}}:latest
+#      - name: Login to Azure Container Registry
+#        uses: azure/docker-login@v1
+#        with:
+#          login-server: ${{ env.ACR_NAME }}.azurecr.io
+#          username: ${{ secrets.ACR_USERNAME }}
+#          password: ${{ secrets.ACR_PASSWORD }}
+#
+#      - name: Build and push Docker image
+#        uses: docker/build-push-action@v2
+#        with:
+#          context: .
+#          push: true
+#          tags: ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME}}:latest
 
       - name: Login to Azure
         uses: azure/login@v1
@@ -83,4 +83,5 @@ jobs:
         with:
           azcliversion: 2.56.0
           inlineScript: |
-            az aks command invoke --resource-group ${{ env.AZURE_RG_NAME }} --name ${{ env.AKS_CLUSTER_NAME }} --command "kubectl apply -f ${{ steps.bake.outputs.manifestsBundle }}"
+            cat ${{ steps.bake.outputs.manifestsBundle }} > manifest.yml
+            az aks command invoke --resource-group ${{ env.AZURE_RG_NAME }} --name ${{ env.AKS_CLUSTER_NAME }} --command "kubectl apply -f manifest.yml"
