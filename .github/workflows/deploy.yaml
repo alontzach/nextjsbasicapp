@@ -74,6 +74,6 @@ jobs:
 #          manifests: ${{ steps.bake.outputs.manifestsBundle }}
 
       - name: Deploy app
-        uses: okteto/apply@master
+        uses: okteto/apply@latest
         with:
           manifest: ${{ steps.bake.outputs.manifestsBundle }}
