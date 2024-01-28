@@ -7,7 +7,7 @@ image:
   tag: latest
 
 replicas: 2
-container_port: 8080
+container_port: 3000
 service_port: 8081
 cpu_limits: 200m
 memory_limits: 256M
