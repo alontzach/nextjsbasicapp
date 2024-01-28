@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
@@ -72,11 +72,3 @@ jobs:
         with:
           action: deploy
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
-
-#
-#      - name: Deploy to AKS
-#        uses: azure/aks-set-image@v1
-#        with:
-#          resource-group: ${{ env.AZURE_RG_NAME }}
-#          cluster-name: ${{ env.AKS_CLUSTER_NAME }}
-#          container-image-name: ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME}}:latest

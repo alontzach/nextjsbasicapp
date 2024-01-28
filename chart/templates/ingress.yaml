@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextapp-ingress
+  annotations:
+    appgw.ingress.kubernetes.io/backend-path-prefix: "/"
+spec:
+  ingressClassName: "azure/application-gateway"
+  rules:
+  - http:
+      paths:
+      - path: /nextapp
+        pathType: Prefix
+        backend:
+          service:
+            name: nextapp
+            port:
+              number: 8081
