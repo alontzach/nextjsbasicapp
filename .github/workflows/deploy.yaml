@@ -83,5 +83,5 @@ jobs:
         with:
           azcliversion: 2.56.0
           inlineScript: |
-            cat ${{ steps.bake.outputs.manifestsBundle }} > manifest.yml
-            az aks command invoke --resource-group ${{ env.AZURE_RG_NAME }} --name ${{ env.AKS_CLUSTER_NAME }} --command "kubectl apply -f manifest.yml"
+            cat ${{ steps.bake.outputs.manifestsBundle }} >> /tmp/manifest.yml
+            az aks command invoke --resource-group ${{ env.AZURE_RG_NAME }} --name ${{ env.AKS_CLUSTER_NAME }} --command "kubectl apply -f /tmp/manifest.yml"
