@@ -94,3 +94,4 @@ jobs:
           inlineScript: |
             cat ${{ steps.bake.outputs.manifestsBundle }} >> manifest.yml
             az aks command invoke --resource-group ${{ env.AZURE_RG_NAME }} --name ${{ env.AKS_CLUSTER_NAME }} --file manifest.yml --command "kubectl apply -f manifest.yml"
+
