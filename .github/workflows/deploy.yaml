@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 env:
   AZURE_RG_NAME: catsRG
@@ -21,19 +24,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-#      - name: Login to Azure Container Registry
-#        uses: azure/docker-login@v1
-#        with:
-#          login-server: ${{ env.ACR_NAME }}.azurecr.io
-#          username: ${{ secrets.ACR_USERNAME }}
-#          password: ${{ secrets.ACR_PASSWORD }}
-#
-#      - name: Build and push Docker image
-#        uses: docker/build-push-action@v2
-#        with:
-#          context: .
-#          push: true
-#          tags: ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME}}:latest
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_NAME }}.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ env.ACR_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE_NAME}}:latest
 
       - name: Login to Azure
         uses: azure/login@v1
@@ -65,18 +68,6 @@ jobs:
             image.tag:latest
           helm-version: "latest"
         id: bake
-
-      # Deploys application based on manifest files from previous step
-#      - name: Deploy application
-#        uses: Azure/k8s-deploy@v4
-#        with:
-#          action: deploy
-#          manifests: ${{ steps.bake.outputs.manifestsBundle }}
-#
-#      - name: Deploy app
-#        uses: okteto/apply@latest
-#        with:
-#          manifest: ${{ steps.bake.outputs.manifestsBundle }}
 
       - name: Deploy application
         uses: Azure/cli@v1.0.9
