@@ -67,8 +67,13 @@ jobs:
         id: bake
 
       # Deploys application based on manifest files from previous step
-      - name: Deploy application
-        uses: Azure/k8s-deploy@v4
+#      - name: Deploy application
+#        uses: Azure/k8s-deploy@v4
+#        with:
+#          action: deploy
+#          manifests: ${{ steps.bake.outputs.manifestsBundle }}
+
+      - name: Deploy app
+        uses: okteto/apply@master
         with:
-          action: deploy
-          manifests: ${{ steps.bake.outputs.manifestsBundle }}
+          manifest: ${{ steps.bake.outputs.manifestsBundle }}
